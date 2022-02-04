@@ -10,3 +10,10 @@ export type ColorNames =
     | "danger"
     | "light"
     | "dark";
+
+type OutlineColorNames = `outline-${ColorNames}`;
+
+/**
+ * Possible names of button color styles
+ */
+export type ButtonColorNames = ColorNames | OutlineColorNames;

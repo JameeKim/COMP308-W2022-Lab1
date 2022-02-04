@@ -1,11 +1,23 @@
 import { Route, Routes } from "react-router-dom";
 
-import Layout from "src/theme/Layout";
+import { AuthProvider } from "src/auth";
+import Layout from "src/layout";
 
+import Home from "src/pages/Home";
+import SignIn from "src/pages/SignIn";
+
+/**
+ * The main application
+ */
 const App = (): JSX.Element => (
-  <Routes>
-    <Route path="/" element={<Layout />} />
-  </Routes>
+  <AuthProvider>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Home />} />
+        <Route path="signin" element={<SignIn />} />
+      </Route>
+    </Routes>
+  </AuthProvider>
 );
 
 export default App;
