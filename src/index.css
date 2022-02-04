@@ -1,0 +1,7 @@
+:root {
+  --bs-black: #000;
+  --bs-body-bg: var(--bs-dark);
+  --bs-body-bg-rgb: var(--bs-dark-rgb);
+  --bs-body-color: var(--bs-light);
+  --bs-body-color-rgb: var(--bs-light-rbg);
+}
