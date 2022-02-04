@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import Layout from "theme/Layout";
+import Layout from "src/theme/Layout";
 
 const App = (): JSX.Element => (
   <Routes>

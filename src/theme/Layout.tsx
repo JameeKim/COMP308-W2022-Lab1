@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 const Layout = (): JSX.Element => (
   <>
@@ -9,6 +9,9 @@ const Layout = (): JSX.Element => (
         <Link to="/" className="navbar-brand">Navbar</Link>
       </div>
     </nav>
+    <div className="container">
+      <Outlet />
+    </div>
   </>
 );
 
