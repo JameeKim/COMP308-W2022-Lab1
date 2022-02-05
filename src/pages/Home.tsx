@@ -13,7 +13,7 @@ const Home = (): JSX.Element => {
 
   return (
     <>
-      <PageHeading>Welcome</PageHeading>
+      <PageHeading>Welcome{email && `, ${email}`}</PageHeading>
       <div>
         <p className="h3 mb-5">{text}</p>
         <div className="text-center">

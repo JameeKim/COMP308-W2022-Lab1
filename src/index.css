@@ -1,9 +1,9 @@
 :root {
   --bs-black: #000;
-  --bs-body-bg: var(--bs-dark);
-  --bs-body-bg-rgb: var(--bs-dark-rgb);
-  --bs-body-color: var(--bs-light);
-  --bs-body-color-rgb: var(--bs-light-rbg);
+  --bs-body-bg: var(--bs-light);
+  --bs-body-bg-rgb: var(--bs-light-rgb);
+  --bs-body-color: var(--bs-dark);
+  --bs-body-color-rgb: var(--bs-dark-rgb);
 }
 
 .container-max-xxl, .container-max-xl, .container-max-lg, .container-max-md, .container-max-sm {
