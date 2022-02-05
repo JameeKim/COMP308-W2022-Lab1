@@ -4,6 +4,7 @@ import { AuthProvider } from "src/auth";
 import Layout from "src/layout";
 
 import Home from "src/pages/Home";
+import NotFound from "src/pages/NotFound";
 import SignIn from "src/pages/SignIn";
 
 /**
@@ -15,6 +16,7 @@ const App = (): JSX.Element => (
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="signin" element={<SignIn />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   </AuthProvider>
