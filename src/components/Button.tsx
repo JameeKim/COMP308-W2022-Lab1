@@ -10,8 +10,11 @@ interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
 }
 
 const Button = forwardRef<ButtonRef, ButtonProps>(
-  ({ color = "primary", className, ...props }, ref: Ref<ButtonRef>) => (
-    <button ref={ref}
+  (
+    { color = "primary", type = "button", className, ...props },
+    ref: Ref<ButtonRef>,
+  ) => (
+    <button ref={ref} type={type}
       className={classNames("btn", `btn-${color}`, className)}
       {...props}
     />
