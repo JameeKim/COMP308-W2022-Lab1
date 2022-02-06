@@ -17,6 +17,25 @@ export interface Comment {
   createdAt: Date;
 }
 
+const initialComments: readonly Readonly<Comment>[] = [
+  {
+    courseCode: "COMP308",
+    section: "001",
+    studentEmail: "dkim173@my.centennialcollege.ca",
+    // eslint-disable-next-line max-len
+    comment: "Proin auctor ipsum vitae odio euismod aliquet vitae quis libero. Donec eget rhoncus enim, a bibendum quam. Donec eu libero vulputate, molestie lectus id, facilisis felis.",
+    createdAt: new Date(Date.now() - 1000 * 60 * 12),
+  },
+  {
+    courseCode: "COMP397",
+    section: "001",
+    studentEmail: "dkim173@my.centennialcollege.ca",
+    // eslint-disable-next-line max-len
+    comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam sodales felis nec eros bibendum semper. Pellentesque at pharetra tellus, non aliquet odio. Suspendisse auctor posuere augue faucibus accumsan.",
+    createdAt: new Date(Date.now() - 1000 * 25),
+  },
+];
+
 export const numToSection = (num: number): string =>
   `${num < 10 ? "00" : num < 100 ? "0" : ""}${num}`;
 
@@ -62,7 +81,8 @@ interface CommentsProviderProps {
 
 export const CommentsProvider =
   ({ children }: CommentsProviderProps): JSX.Element => {
-    const [comments, setComments] = useState<readonly Readonly<Comment>[]>([]);
+    const [comments, setComments]
+      = useState<readonly Readonly<Comment>[]>(initialComments);
 
     const add = useCallback<CommentsContextData["add"]>(
       (newComment, cb) => {

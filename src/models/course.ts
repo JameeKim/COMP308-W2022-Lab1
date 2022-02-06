@@ -40,6 +40,11 @@ const courses: Readonly<Record<string, Readonly<Course>>> = {
     name: "Data Structures and Algorithms",
     sections: 9,
   },
+  "COMP212": {
+    code: "COMP212",
+    name: "Programming 3",
+    sections: 12,
+  },
 };
 
 export default courses;
