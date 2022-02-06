@@ -10,7 +10,7 @@ import reportWebVitals from "./reportWebVitals";
 
 render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/COMP308-W2022-Lab1">
       <App />
     </BrowserRouter>
   </StrictMode>,
