@@ -1,3 +1,5 @@
+import { generateDelay } from "src/utils/serverStub";
+
 /**
  * Stub interface for server-side auth functions
  */
@@ -12,22 +14,6 @@ export interface AuthStub {
    */
   readonly endSession: (cb: () => void) => void;
 }
-
-/**
- * Minimum value of simulated network response delay in milliseconds
- */
-const SERVER_DELAY_MIN = 100;
-
-/**
- * Maximum value of simulated network response delay in milliseconds
- */
-const SERVER_DELAY_MAX = 500;
-
-/**
- * Generate a random number to imitate server response
- */
-const generateDelay = (): number =>
-  Math.random() * (SERVER_DELAY_MAX - SERVER_DELAY_MIN) + SERVER_DELAY_MIN;
 
 /**
  * Stub instance for server-side auth functions

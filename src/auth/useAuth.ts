@@ -9,7 +9,7 @@ const useAuth = (): AuthContextData => {
   const data = useContext(AuthContext);
 
   if (!data) {
-    /** This context doesn't work without {@link AuthProvider} */
+    // This context doesn't work without AuthProvider
     throw new Error("useAuth must be used with AuthProvider");
   }
 
