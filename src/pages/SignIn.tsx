@@ -67,29 +67,45 @@ const SignIn = (): JSX.Element => {
 
   return (
     <>
-      <PageHeading>Sign In to Leave Comments</PageHeading>
-      <form onSubmit={onSubmit}>
-        <div className="mb-3">
-          <Label htmlFor="login-email">Email</Label>
-          <Input
-            value={email}
-            onChange={onEmailChange}
-            type="email"
-            name="login-email"
-            required
-          />
+      <PageHeading>Sign In <small>to Leave Comments</small></PageHeading>
+      <form onSubmit={onSubmit} className="vstack gap-2 mt-5">
+        <div className="row">
+          <Label
+            htmlFor="login-email"
+            col
+            className="ms-1 ms-sm-0 col-sm-2 text-sm-end"
+          >
+            Email
+          </Label>
+          <div className="col-sm-10">
+            <Input
+              value={email}
+              onChange={onEmailChange}
+              type="email"
+              name="login-email"
+              required
+            />
+          </div>
         </div>
-        <div className="mb-3">
-          <Label htmlFor="login-password">Password</Label>
-          <Input
-            value={password}
-            onChange={onPasswordChange}
-            type="password"
-            name="login-password"
-            required
-          />
+        <div className="row">
+          <Label
+            htmlFor="login-password"
+            col
+            className="ms-1 ms-sm-0 col-sm-2 text-sm-end"
+          >
+            Password
+          </Label>
+          <div className="col-sm-10">
+            <Input
+              value={password}
+              onChange={onPasswordChange}
+              type="password"
+              name="login-password"
+              required
+            />
+          </div>
         </div>
-        <Button type="submit">Sign In</Button>
+        <Button type="submit" className="mt-4 mt-sm-3">Sign In</Button>
       </form>
     </>
   );

@@ -34,8 +34,8 @@ const AuthProvider = ({ children }: AuthProps): JSX.Element => {
   const endSession = useCallback<AuthContextData["endSession"]>(
     (cb) => {
       authStub.endSession(() => {
-        setEmail(null);
         cb();
+        setEmail(null);
       });
     },
     [],

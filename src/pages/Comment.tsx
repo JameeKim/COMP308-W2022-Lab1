@@ -114,10 +114,12 @@ const Comment = (): JSX.Element => {
   return (
     <>
       <PageHeading>Leave Your Comment</PageHeading>
-      <form onSubmit={onSubmit}>
-        <fieldset className="mb-3">
-          <legend>Course Information</legend>
-          <div className="mb-3">
+
+      <form onSubmit={onSubmit} className="vstack gap-4">
+
+        <fieldset className="vstack gap-3">
+          <legend className="mb-0">Course Information</legend>
+          <div>
             <Label htmlFor="course">Course</Label>
             <select
               value={course?.code || ""}
@@ -131,7 +133,7 @@ const Comment = (): JSX.Element => {
               <option value="">Other</option>
             </select>
           </div>
-          <div className="mb-3 row">
+          <div className="row">
             <div className="col-12 col-sm mb-2 mb-sm-0">
               <Label htmlFor="course-code">Course Code</Label>
               <Input
@@ -156,7 +158,7 @@ const Comment = (): JSX.Element => {
               />
             </div>
           </div>
-          <div className="mb-3">
+          <div>
             <Label htmlFor="course-name">Course Name</Label>
             <Input
               value={course?.name || name}
@@ -168,9 +170,10 @@ const Comment = (): JSX.Element => {
             />
           </div>
         </fieldset>
-        <fieldset>
-          <legend>Your Input</legend>
-          <div className="mb-3">
+
+        <fieldset className="vstack gap-3">
+          <legend className="mb-0">Your Input</legend>
+          <div>
             <Label htmlFor="student-email">Student Email</Label>
             <Input
               value={email || ""}
@@ -180,7 +183,7 @@ const Comment = (): JSX.Element => {
               readOnly
             />
           </div>
-          <div className="mb-3">
+          <div>
             <Label htmlFor="comment">Comment</Label>
             <TextArea
               value={comment}
@@ -190,9 +193,9 @@ const Comment = (): JSX.Element => {
             />
           </div>
         </fieldset>
-        <div>
-          <Button type="submit">Submit</Button>
-        </div>
+
+        <Button type="submit">Submit</Button>
+
       </form>
     </>
   );

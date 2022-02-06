@@ -20,7 +20,7 @@ const Layout = (): JSX.Element => {
   return (
     <>
       <NavBar />
-      <div className="container-max-md mt-5">
+      <div className="container-max-md mt-4 p-3">
         <PageHeadingTarget ref={headingRef} />
         <PageHeadingProvider value={headingDOM}>
           <Outlet />

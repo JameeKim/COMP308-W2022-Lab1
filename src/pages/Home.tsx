@@ -13,12 +13,17 @@ const Home = (): JSX.Element => {
 
   return (
     <>
-      <PageHeading>Welcome{email && `, ${email}`}</PageHeading>
+      <PageHeading>
+        Welcome{email && <small>, {email.split("@")[0]}</small>}
+      </PageHeading>
       <div>
-        <p className="h3 mb-5">{text}</p>
+        <p className="h4 mb-4">{text}</p>
         <div className="text-center">
-          <Link to={email ? "comment" : "signin"}
-            type="btn" color="primary"
+          <Link
+            to={email ? "comment" : "signin"}
+            type="btn"
+            color="primary"
+            className="btn-lg"
           >{btnText}</Link>
         </div>
       </div>

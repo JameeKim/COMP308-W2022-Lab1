@@ -11,10 +11,14 @@ const NavBar = (): JSX.Element => {
   const onSignOut = (): void => endSession(() => navigate("/"));
 
   // Sign In / Sign Out buttons at the top right corner
-  const authButtons = email
+  const splitEmail = email?.split("@");
+  const authButtons = splitEmail
     ? (
       <>
-        <span className="navbar-text me-3">{email}</span>
+        <span className="navbar-text me-3 me-sm-0">{splitEmail[0]}</span>
+        <span className="navbar-text me-3 d-none d-sm-inline">
+          @{splitEmail[1]}
+        </span>
         <Button onClick={onSignOut}>Sign Out</Button>
       </>
     )
