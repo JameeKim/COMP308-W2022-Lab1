@@ -5,13 +5,16 @@ import {
   useCallback,
   useReducer,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "src/auth";
 import { PageHeading } from "src/layout";
+
 import Button from "src/components/Button";
 import Input from "src/components/Input";
 import Label from "src/components/Label";
+
+import type { LocationState } from "src/utils/routes";
 
 interface SignInFormData {
   email: string;
@@ -40,6 +43,7 @@ const reducer: Reducer<SignInFormData, SignInFormAction> =
  */
 const SignIn = (): JSX.Element => {
   const { authenticate } = useAuth();
+  const location = useLocation();
   const navigate = useNavigate();
 
   // state for input values in the form
@@ -60,9 +64,12 @@ const SignIn = (): JSX.Element => {
   const onSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
     (e) => {
       e.preventDefault();
-      authenticate(email, () => navigate("/", { replace: true }));
+      authenticate(email, () => navigate(
+        (location.state as LocationState)?.from?.pathname || "/",
+        { replace: true },
+      ));
     },
-    [authenticate, email, navigate],
+    [authenticate, email, location.state, navigate],
   );
 
   return (
