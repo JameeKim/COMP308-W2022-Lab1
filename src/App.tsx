@@ -21,10 +21,13 @@ const App = (): JSX.Element => (
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="signin" element={<SignIn />} />
-          <Route
-            path="comment"
-            element={<RequireAuth><Comment /></RequireAuth>}
-          />
+          <Route path="comment">
+            <Route index element={<RequireAuth><Comment /></RequireAuth>} />
+            <Route
+              path=":commentIdx"
+              element={<RequireAuth><Comment /></RequireAuth>}
+            />
+          </Route>
           <Route path="thankyou" element={<ThankYou />} />
           <Route path="*" element={<NotFound />} />
         </Route>

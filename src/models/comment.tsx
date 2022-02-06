@@ -3,6 +3,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useMemo,
   useState,
 } from "react";
 
@@ -13,6 +14,7 @@ export interface Comment {
   section: string;
   studentEmail: string;
   comment: string;
+  createdAt: Date;
 }
 
 export const numToSection = (num: number): string =>
@@ -23,10 +25,21 @@ export interface CommentsContextData {
    * Read-only list of all submitted comments
    */
   comments: readonly Readonly<Comment>[];
+
   /**
    * Add a new comment and return the index of the new comment in the list
    */
   add: (newComment: Readonly<Comment>, cb: (newIndex: number) => void) => void;
+
+  /**
+   * Edit a comment at the given index to the newly provided one
+   */
+  edit: (idx: number, newComment: Readonly<Comment>, cb: () => void) => void;
+
+  /**
+   * Remove a comment at the given index
+   */
+  remove: (idx: number, cb: () => void) => void;
 }
 
 const CommentsContext = createContext<CommentsContextData | null>(null);
@@ -53,14 +66,43 @@ export const CommentsProvider =
 
     const add = useCallback<CommentsContextData["add"]>(
       (newComment, cb) => {
-        setComments(comments.concat(newComment));
-        setTimeout(() => cb(comments.length), generateDelay());
+        setTimeout(() => {
+          setComments(comments.concat(newComment));
+          cb(comments.length);
+        }, generateDelay());
       },
       [comments],
     );
 
+    const edit = useCallback<CommentsContextData["edit"]>(
+      (idx, newComment, cb) => {
+        setTimeout(() => {
+          const newComments = [...comments];
+          newComments[idx] = newComment;
+          setComments(newComments);
+          cb();
+        }, generateDelay());
+      },
+      [comments],
+    );
+
+    const remove = useCallback<CommentsContextData["remove"]>(
+      (idx, cb) => {
+        setTimeout(() => {
+          setComments(comments.filter((_, i) => i !== idx));
+          cb();
+        }, generateDelay());
+      },
+      [comments],
+    );
+
+    const value = useMemo<CommentsContextData>(
+      () => ({ comments, add, edit, remove }),
+      [add, comments, edit, remove],
+    );
+
     return (
-      <CommentsContext.Provider value={{ comments, add }}>
+      <CommentsContext.Provider value={value}>
         {children}
       </CommentsContext.Provider>
     );

@@ -5,7 +5,7 @@ import {
   useCallback,
   useReducer,
 } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useRequiredAuth } from "src/auth";
 import { PageHeading } from "src/layout";
@@ -15,8 +15,14 @@ import Input from "src/components/Input";
 import Label from "src/components/Label";
 import TextArea from "src/components/TextArea";
 
-import { numToSection, useComments } from "src/models/comment";
-import courses, { Course, courseCmp } from "src/models/course";
+import {
+  Comment as CommentType,
+  numToSection,
+  useComments,
+} from "src/models/comment";
+import courses, { Course } from "src/models/course";
+
+import NotFound from "./NotFound";
 
 interface CommentState {
   course: Readonly<Course> | null;
@@ -35,6 +41,14 @@ const defaultState: CommentState = {
 };
 Object.freeze(defaultState);
 
+const commentStateInit = (comment: CommentType | null): CommentState => ({
+  course: courses[comment?.courseCode || "invalid"] || defaultState.course,
+  code: comment?.courseCode || defaultState.code,
+  name: courses[comment?.courseCode || "invalid"]?.name || defaultState.name,
+  section: comment?.section || defaultState.section,
+  comment: comment?.comment || defaultState.comment,
+});
+
 interface CommentAction {
   type: keyof CommentState;
   value: string;
@@ -45,7 +59,7 @@ const commentReducer: Reducer<CommentState, CommentAction> = (s, a) => {
 
   switch (a.type) {
   case "course":
-    n.course = courses.find((c) => c.code === a.value) || null;
+    n.course = courses[a.value] || null;
     if (n.course && n.course.sections < Number(n.section)) {
       n.section = numToSection(n.course.sections);
     }
@@ -76,12 +90,28 @@ const courseOption = ({ code, name }: Course): JSX.Element =>
  */
 const Comment = (): JSX.Element => {
   const { email } = useRequiredAuth();
-  const { add } = useComments();
+  const { comments, add, edit } = useComments();
+  const idxParam = useParams().commentIdx;
   const navigate = useNavigate();
 
+  let currentIdx: number | undefined = undefined;
+  try {
+    currentIdx = Number(idxParam);
+  } catch (e) {
+    // ignore
+  }
+
+  const stateInitData =
+    currentIdx !== undefined && currentIdx < comments.length
+      ? comments[currentIdx]
+      : null;
+
   // state for input values in the form
-  const [{ course, code, name, section, comment }, dispatch] =
-    useReducer(commentReducer, defaultState);
+  const [{ course, code, name, section, comment }, dispatch] = useReducer(
+    commentReducer,
+    stateInitData,
+    commentStateInit,
+  );
 
   // handle input value changes
   const onFormInputChange = useCallback<ChangeEventHandler<FormInputElement>>(
@@ -92,27 +122,45 @@ const Comment = (): JSX.Element => {
     [],
   );
 
+  if (stateInitData && stateInitData.studentEmail !== email) {
+    return <NotFound />;
+  }
+
   // form submit handler
   const courseCode = course?.code || code;
-  const onSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
-    (e) => {
-      e.preventDefault();
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (currentIdx !== undefined && currentIdx < comments.length) {
+      edit(
+        currentIdx,
+        {
+          courseCode,
+          section: section,
+          studentEmail: email,
+          comment,
+          createdAt: comments[currentIdx].createdAt,
+        },
+        () => navigate("/"),
+      );
+    } else {
       add(
         {
           courseCode,
           section: section,
           studentEmail: email,
           comment,
+          createdAt: new Date(),
         },
         (idx) => navigate("/thankyou", { state: { newCommentIndex: idx } }),
       );
-    },
-    [add, comment, courseCode, email, navigate, section],
-  );
+    }
+  };
 
   return (
     <>
-      <PageHeading>Leave Your Comment</PageHeading>
+      <PageHeading>
+        {stateInitData ? "Edit" : "Leave"} Your Comment
+      </PageHeading>
 
       <form onSubmit={onSubmit} className="vstack gap-4">
 
@@ -128,7 +176,10 @@ const Comment = (): JSX.Element => {
               className="form-select"
               required
             >
-              {[...courses].sort(courseCmp).map(courseOption)}
+              {Object.keys(courses)
+                .sort()
+                .map((c) => courses[c])
+                .map(courseOption)}
               <option value="">Other</option>
             </select>
           </div>
