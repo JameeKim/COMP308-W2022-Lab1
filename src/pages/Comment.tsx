@@ -6,7 +6,7 @@ import {
   useReducer,
 } from "react";
 
-import { useAuth } from "src/auth";
+import { useRequiredAuth } from "src/auth";
 import { PageHeading } from "src/layout";
 
 import Button from "src/components/Button";
@@ -74,7 +74,7 @@ const courseOption = ({ code, name }: Course): JSX.Element =>
  * Comment page component
  */
 const Comment = (): JSX.Element => {
-  const { email } = useAuth();
+  const { email } = useRequiredAuth();
   const { add } = useComments();
 
   // state for input values in the form
@@ -99,9 +99,7 @@ const Comment = (): JSX.Element => {
         {
           courseCode,
           section: section,
-          // TODO(auth) required auth with type checking
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          studentEmail: email!,
+          studentEmail: email,
           comment,
         },
         (idx) => {

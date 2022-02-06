@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import { AuthProvider } from "src/auth";
+import { AuthProvider, RequireAuth } from "src/auth";
 import Layout from "src/layout";
 
 import Comment from "src/pages/Comment";
@@ -19,7 +19,10 @@ const App = (): JSX.Element => (
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="signin" element={<SignIn />} />
-          <Route path="comment" element={<Comment />} />
+          <Route
+            path="comment"
+            element={<RequireAuth><Comment /></RequireAuth>}
+          />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
