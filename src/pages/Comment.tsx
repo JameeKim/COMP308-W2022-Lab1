@@ -5,6 +5,7 @@ import {
   useCallback,
   useReducer,
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useRequiredAuth } from "src/auth";
 import { PageHeading } from "src/layout";
@@ -76,6 +77,7 @@ const courseOption = ({ code, name }: Course): JSX.Element =>
 const Comment = (): JSX.Element => {
   const { email } = useRequiredAuth();
   const { add } = useComments();
+  const navigate = useNavigate();
 
   // state for input values in the form
   const [{ course, code, name, section, comment }, dispatch] =
@@ -102,13 +104,10 @@ const Comment = (): JSX.Element => {
           studentEmail: email,
           comment,
         },
-        (idx) => {
-          // TODO(comment) redirect to thank you page
-          console.log(`New comment added at index ${idx}`);
-        },
+        (idx) => navigate("/thankyou", { state: { newCommentIndex: idx } }),
       );
     },
-    [add, comment, courseCode, email, section],
+    [add, comment, courseCode, email, navigate, section],
   );
 
   return (

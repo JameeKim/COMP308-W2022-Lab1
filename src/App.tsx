@@ -7,6 +7,8 @@ import Comment from "src/pages/Comment";
 import Home from "src/pages/Home";
 import NotFound from "src/pages/NotFound";
 import SignIn from "src/pages/SignIn";
+import ThankYou from "src/pages/ThankYou";
+
 import { CommentsProvider } from "./models/comment";
 
 /**
@@ -23,6 +25,7 @@ const App = (): JSX.Element => (
             path="comment"
             element={<RequireAuth><Comment /></RequireAuth>}
           />
+          <Route path="thankyou" element={<ThankYou />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -9,7 +9,7 @@ const Home = (): JSX.Element => {
   const text = email
     ? "To leave a new comment, press the button below."
     : "Please sign in to leave a comment.";
-  const btnText = email ? "Leave a new Comment" : "Sign In";
+  const btnText = email ? "Leave a New Comment" : "Sign In";
 
   return (
     <>

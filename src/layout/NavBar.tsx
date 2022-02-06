@@ -1,6 +1,8 @@
+import { useCallback } from "react";
 import { Link as PlainLink, useLocation, useNavigate } from "react-router-dom";
 
 import { useAuth } from "src/auth";
+
 import Button from "src/components/Button";
 import Link from "src/components/Link";
 
@@ -9,7 +11,16 @@ const NavBar = (): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const onSignOut = (): void => endSession(() => navigate("/"));
+  const onSignOut = useCallback(
+    () => {
+      endSession(() => {
+        if (location.pathname !== "/") {
+          navigate("/");
+        }
+      });
+    },
+    [endSession, location.pathname, navigate],
+  );
 
   // Sign In / Sign Out buttons at the top right corner
   const splitEmail = email?.split("@");
